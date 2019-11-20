@@ -13,7 +13,7 @@ var (
 )
 
 func usage() {
-	fmt.Println("Usage: mkt target/path/file.txt")
+	fmt.Println("Usage: mks target/path/file.txt")
 	flag.PrintDefaults()
 }
 
