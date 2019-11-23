@@ -13,11 +13,18 @@ var (
 )
 
 func usage() {
-	fmt.Println("Usage: mks target/path/file.txt")
+	fmt.Println("Usage:")
+	fmt.Println("  mks target/path/file.txt")
+	fmt.Println("  mks target/path/file.txt -b 'file body here' -b 'multiple lines can be added too'")
+	fmt.Println("\nFlags")
 	flag.PrintDefaults()
+	fmt.Println("\nPlease report issues at https://github.com/paulvollmer/mks/issues")
+	fmt.Println("Copyright 2019, Paul Vollmer")
 }
 
 func main() {
+	// TODO: -b flag to create the body
+	flagMode := flag.Int("m", 0, "the file mode")
 	flagVersion := flag.Bool("version", false, "print the version and exit")
 	flag.Usage = usage
 	flag.Parse()
@@ -31,7 +38,7 @@ func main() {
 
 	// fmt.Println(nargs, args)
 	if nargs == 0 {
-		fmt.Printf("==> missing path")
+		usage()
 		os.Exit(1)
 	} else if nargs >= 1 {
 
@@ -43,7 +50,11 @@ func main() {
 		}
 		fmt.Printf("==> create file: %q, body: %q\n", args[0], body)
 
-		err := createSource(args[0], body)
+		mode := os.ModePerm
+		if *flagMode != 0 {
+			mode = os.FileMode(*flagMode)
+		}
+		err := createSource(args[0], body, mode)
 		if err != nil {
 			fmt.Println("ERROR:> ", err)
 			os.Exit(1)
@@ -54,13 +65,13 @@ func main() {
 	}
 }
 
-func createSource(src string, body []byte) error {
+func createSource(src string, body []byte, mode os.FileMode) error {
 	dir, file := path.Split(src)
 	// fmt.Println("==> DIR", dir, "FILE", file)
 	if dir != "" {
 		// check if the directory exist
 		if _, err := os.Stat(dir); os.IsNotExist(err) {
-			err := os.MkdirAll(dir, os.ModePerm)
+			err := os.MkdirAll(dir, mode)
 			if err != nil {
 				return err
 			}
