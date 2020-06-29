@@ -1,15 +1,31 @@
-# mks
+<p align="center">
+  <h3 align="center">mks</h3>
+  <p align="center">mks is a tool to create files and the intermediate directories.</p>
+  <p align="center">
+    <a href="https://github.com/paulvollmer/mks/actions"><img alt="Github Actions" src="https://github.com/paulvollmer/mks/workflows/CI/badge.svg?style=flat-square"> </a>
+    <a href="https://github.com/paulvollmer/mks/releases"><img alt="Software Release" src="https://img.shields.io/github/v/release/paulvollmer/mks.svg?include_prereleases&style=flat-square&color=blue"></a>
+    <a href="/LICENSE"><img alt="Software License" src="https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square"></a>
+  </p>
+</p>
 
-## Getting Started
-`mks` is a tool to create files and the intermediate directories.
+---
 
 ## Installation
 
+Install with brew
+
 ```sh
-go get github.com/paulvollmer/mkt
+brew install paulvollmer/tap/yaml2json
+```
+
+Install with go
+
+```sh
+go get -u github.com/paulvollmer/mkt
 ```
 
 ## Usage
+
 The philosophy behind `mks` is simplicity. With the following command you can create a file `foo.txt` inside the `path/to` directory.
 
 ```sh
