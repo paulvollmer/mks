@@ -1,7 +1,7 @@
 # mks
 
 ## Getting Started
-`mks` is a tool to make file sources.
+`mks` is a tool to create files and the intermediate directories.
 
 ## Installation
 
@@ -10,7 +10,7 @@ go get github.com/paulvollmer/mkt
 ```
 
 ## Usage
-The philosophy behind `mks` is simplicity. WItrh the following command you can create a file.
+The philosophy behind `mks` is simplicity. With the following command you can create a file `foo.txt` inside the `path/to` directory.
 
 ```sh
 mks path/to/foo.txt
@@ -19,7 +19,7 @@ mks path/to/foo.txt
 ## Development
 
 ```sh
-git clone ...
+git clone git@github.com:paulvollmer/mks.git
 cd mks
 make
 # is equivalent to
@@ -28,4 +28,5 @@ make
 ```
 
 ## License
+
 [MIT License](LICENSE)
