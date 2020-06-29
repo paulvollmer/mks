@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"io/ioutil"
 	"os"
-	"path"
+	"path/filepath"
 )
 
 var (
@@ -17,7 +17,7 @@ var (
 func usage() {
 	fmt.Println("Usage:")
 	fmt.Println("  mks target/path/file.txt")
-	fmt.Println("  mks target/path/file.txt -b 'file body here' -b 'multiple lines can be added too'")
+	fmt.Println("  mks target/path/file.txt 'file body here'")
 	fmt.Println("\nFlags")
 	flag.PrintDefaults()
 	fmt.Println("\nPlease report issues at https://github.com/paulvollmer/mks/issues")
@@ -25,68 +25,58 @@ func usage() {
 }
 
 func main() {
-	// TODO: -b flag to create the body
-	flagMode := flag.Int("m", 0, "the file mode")
 	flagVersion := flag.Bool("version", false, "print the version and exit")
 	flag.Usage = usage
 	flag.Parse()
 	if *flagVersion {
-		fmt.Printf("v%s\n", version)
+		fmt.Printf("version:  %s\n", version)
+		fmt.Printf("commit:   %s\n", commit)
+		fmt.Printf("build at: %s\n", date)
 		os.Exit(0)
 	}
 
 	nargs := flag.NArg()
 	args := flag.Args()
 
-	// fmt.Println(nargs, args)
 	if nargs == 0 {
 		usage()
 		os.Exit(1)
 	} else if nargs >= 1 {
 
 		body := []byte("")
-		// fmt.Println("NARGS", nargs)
 		if nargs >= 2 {
 			body = []byte(args[1])
-			// fmt.Println("BODY", string(body))
 		}
-		fmt.Printf("==> create file: %q, body: %q\n", args[0], body)
 
-		mode := os.ModePerm
-		if *flagMode != 0 {
-			mode = os.FileMode(*flagMode)
-		}
-		err := createSource(args[0], body, mode)
+		err := createSource(args[0], body)
 		if err != nil {
-			fmt.Println("ERROR:> ", err)
+			fmt.Printf("ERROR %s\n", err)
 			os.Exit(1)
 		}
 
 	} else {
-		fmt.Printf("==> unknown command\n")
+		usage()
+		os.Exit(1)
 	}
 }
 
-func createSource(src string, body []byte, mode os.FileMode) error {
-	dir, file := path.Split(src)
-	// fmt.Println("==> DIR", dir, "FILE", file)
+func createSource(src string, body []byte) error {
+	dir, _ := filepath.Split(src)
 	if dir != "" {
 		// check if the directory exist
 		if _, err := os.Stat(dir); os.IsNotExist(err) {
-			err := os.MkdirAll(dir, mode)
+			err := os.MkdirAll(dir, 0755)
 			if err != nil {
 				return err
 			}
-			return ioutil.WriteFile(src, body, 0755)
+			return ioutil.WriteFile(src, body, 0644)
 		}
 	}
 
 	// check if a file exist
 	if _, err := os.Stat(src); os.IsNotExist(err) {
 		// path exists, creating the file...
-		fmt.Println("==> create file", file, src)
-		ioutil.WriteFile(src, body, 0755)
+		ioutil.WriteFile(src, body, 0644)
 	}
-
 	return nil
 }
