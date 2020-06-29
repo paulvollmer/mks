@@ -15,13 +15,13 @@
 Install with brew
 
 ```sh
-brew install paulvollmer/tap/yaml2json
+brew install paulvollmer/tap/mks
 ```
 
 Install with go
 
 ```sh
-go get -u github.com/paulvollmer/mkt
+go get -u github.com/paulvollmer/mks
 ```
 
 ## Usage
