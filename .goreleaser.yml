@@ -1,0 +1,10 @@
+project_name: mks
+builds:
+  - binary: mks
+    goos:
+      - darwin
+      - linux
+      - windows
+    goarch:
+      - amd64
+      - 386

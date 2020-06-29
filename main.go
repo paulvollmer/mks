@@ -9,7 +9,9 @@ import (
 )
 
 var (
-	version = "0.1.0"
+	version = "dev"
+	commit  = "none"
+	date    = "unknown"
 )
 
 func usage() {
@@ -19,7 +21,7 @@ func usage() {
 	fmt.Println("\nFlags")
 	flag.PrintDefaults()
 	fmt.Println("\nPlease report issues at https://github.com/paulvollmer/mks/issues")
-	fmt.Println("Copyright 2019, Paul Vollmer")
+	fmt.Println("Copyright 2019-2020, Paul Vollmer")
 }
 
 func main() {
