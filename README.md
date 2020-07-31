@@ -29,7 +29,16 @@ go get -u github.com/paulvollmer/mks
 The philosophy behind `mks` is simplicity. With the following command you can create a file `foo.txt` inside the `path/to` directory.
 
 ```sh
-mks path/to/foo.txt
+Usage:
+  mks target/path/file.txt
+  mks target/path/file.txt 'file body here'
+
+Flags
+  -version
+    print the version and exit
+
+Please report issues at https://github.com/paulvollmer/mks/issues
+Copyright 2019-2020, Paul Vollmer
 ```
 
 ## Development
