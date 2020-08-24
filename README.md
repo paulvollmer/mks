@@ -32,6 +32,7 @@ The philosophy behind `mks` is simplicity. With the following command you can cr
 Usage:
   mks target/path/file.txt
   mks target/path/file.txt 'file body here'
+  echo 'file body here' | mks target/path/file.txt
 
 Flags
   -version
@@ -49,6 +50,8 @@ cd mks
 make
 # is equivalent to
 # make fmt
+# make lint
+# make test
 # make build
 ```
 

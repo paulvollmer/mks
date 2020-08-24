@@ -19,6 +19,7 @@ func usage() {
 	fmt.Println("Usage:")
 	fmt.Println("  mks target/path/file.txt")
 	fmt.Println("  mks target/path/file.txt 'file body here'")
+	fmt.Println("  echo 'file body here' | mks target/path/file.txt")
 	fmt.Println("\nFlags")
 	flag.PrintDefaults()
 	fmt.Println("\nPlease report issues at https://github.com/paulvollmer/mks/issues")
