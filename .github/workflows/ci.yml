@@ -4,8 +4,8 @@ on:
   pull_request:
 
 jobs:
-  build:
-    name: Build
+  test:
+    name: Test
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -21,3 +21,6 @@ jobs:
 
       - name: Build
         run: go build
+
+      - name: Test
+        run: make test

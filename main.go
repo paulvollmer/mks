@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bufio"
 	"flag"
 	"fmt"
 	"io/ioutil"
@@ -18,6 +19,7 @@ func usage() {
 	fmt.Println("Usage:")
 	fmt.Println("  mks target/path/file.txt")
 	fmt.Println("  mks target/path/file.txt 'file body here'")
+	fmt.Println("  echo 'file body here' | mks target/path/file.txt")
 	fmt.Println("\nFlags")
 	flag.PrintDefaults()
 	fmt.Println("\nPlease report issues at https://github.com/paulvollmer/mks/issues")
@@ -38,29 +40,44 @@ func main() {
 	nargs := flag.NArg()
 	args := flag.Args()
 
-	if nargs == 0 {
-		usage()
+	stdin, err := os.Stdin.Stat()
+	if err != nil {
+		fmt.Println(err)
 		os.Exit(1)
-	} else if nargs >= 1 {
+	}
+	if nargs == 0 && stdin.Size() == 0 {
+		usage()
+		os.Exit(0)
+	}
 
-		body := []byte("")
-		if nargs >= 2 {
-			body = []byte(args[1])
-		}
+	body := []byte("")
 
-		err := createSource(args[0], body)
+	if stdin.Size() > 0 {
+		reader := bufio.NewReader(os.Stdin)
+		stdinText, err := reader.ReadString('\n')
 		if err != nil {
-			fmt.Printf("ERROR %s\n", err)
+			fmt.Println(err)
 			os.Exit(1)
 		}
+		body = []byte(stdinText)
+	} else if nargs >= 2 {
+		body = []byte(args[1])
+	}
 
-	} else {
-		usage()
+	err = createSource(args[0], body)
+	if err != nil {
+		fmt.Printf("ERROR %s\n", err)
 		os.Exit(1)
 	}
 }
 
 func createSource(src string, body []byte) error {
+	// check if a file exist
+	_, err := os.Stat(src)
+	if err == nil {
+		return nil
+	}
+
 	dir, _ := filepath.Split(src)
 	if dir != "" {
 		// check if the directory exist
@@ -69,14 +86,8 @@ func createSource(src string, body []byte) error {
 			if err != nil {
 				return err
 			}
-			return ioutil.WriteFile(src, body, 0644)
 		}
 	}
 
-	// check if a file exist
-	if _, err := os.Stat(src); os.IsNotExist(err) {
-		// path exists, creating the file...
-		ioutil.WriteFile(src, body, 0644)
-	}
-	return nil
+	return ioutil.WriteFile(src, body, 0644)
 }
