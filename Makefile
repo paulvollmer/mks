@@ -1,10 +1,4 @@
-all: fmt lint test build
-
-fmt:
-	@go fmt
-
-lint:
-	@golint
+all: test build
 
 build:
 	@go build

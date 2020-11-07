@@ -21,13 +21,15 @@ func usage() {
 	fmt.Println("  mks target/path/file.txt 'file body here'")
 	fmt.Println("  echo 'file body here' | mks target/path/file.txt")
 	fmt.Println("\nFlags")
-	flag.PrintDefaults()
-	fmt.Println("\nPlease report issues at https://github.com/paulvollmer/mks/issues")
+	fmt.Println("  -perm int    the file permission (default 0644)")
+	fmt.Println("  -version     print the version and exit")
+	fmt.Println("\n\nPlease report issues at https://github.com/paulvollmer/mks/issues")
 	fmt.Println("Copyright 2019-2020, Paul Vollmer")
 }
 
 func main() {
-	flagVersion := flag.Bool("version", false, "print the version and exit")
+	flagVersion := flag.Bool("version", false, "")
+	flagFilePermission := flag.Int("perm", 0644, "")
 	flag.Usage = usage
 	flag.Parse()
 	if *flagVersion {
@@ -64,14 +66,14 @@ func main() {
 		body = []byte(args[1])
 	}
 
-	err = createSource(args[0], body)
+	err = createSource(args[0], body, os.FileMode(*flagFilePermission))
 	if err != nil {
 		fmt.Printf("ERROR %s\n", err)
 		os.Exit(1)
 	}
 }
 
-func createSource(src string, body []byte) error {
+func createSource(src string, body []byte, perm os.FileMode) error {
 	// check if a file exist
 	_, err := os.Stat(src)
 	if err == nil {
@@ -89,5 +91,5 @@ func createSource(src string, body []byte) error {
 		}
 	}
 
-	return ioutil.WriteFile(src, body, 0644)
+	return ioutil.WriteFile(src, body, perm)
 }
