@@ -28,7 +28,7 @@ func usage() {
 
 func main() {
 	flagVersion := flag.Bool("version", false, "print the version and exit")
-	flagFilePermission := flag.Uint64("perm", 0600, "the file permission")
+	flagFilePermission := flag.Int("perm", 0644, "the file permission")
 	flag.Usage = usage
 	flag.Parse()
 	if *flagVersion {
