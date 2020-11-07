@@ -21,14 +21,15 @@ func usage() {
 	fmt.Println("  mks target/path/file.txt 'file body here'")
 	fmt.Println("  echo 'file body here' | mks target/path/file.txt")
 	fmt.Println("\nFlags")
-	flag.PrintDefaults()
-	fmt.Println("\nPlease report issues at https://github.com/paulvollmer/mks/issues")
+	fmt.Println("  -perm int    the file permission (default 0644)")
+  fmt.Println("  -version     print the version and exit")
+	fmt.Println("\n\nPlease report issues at https://github.com/paulvollmer/mks/issues")
 	fmt.Println("Copyright 2019-2020, Paul Vollmer")
 }
 
 func main() {
-	flagVersion := flag.Bool("version", false, "print the version and exit")
-	flagFilePermission := flag.Int("perm", 0644, "the file permission")
+	flagVersion := flag.Bool("version", false, "")
+	flagFilePermission := flag.Int("perm", 0644, "")
 	flag.Usage = usage
 	flag.Parse()
 	if *flagVersion {

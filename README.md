@@ -35,8 +35,9 @@ Usage:
   echo 'file body here' | mks target/path/file.txt
 
 Flags
-  -version
-    print the version and exit
+  -perm int    the file permission (default 0644)
+  -version     print the version and exit
+
 
 Please report issues at https://github.com/paulvollmer/mks/issues
 Copyright 2019-2020, Paul Vollmer
