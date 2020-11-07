@@ -28,6 +28,7 @@ func usage() {
 
 func main() {
 	flagVersion := flag.Bool("version", false, "print the version and exit")
+	flagFilePermission := flag.Uint64("perm", 0600, "the file permission")
 	flag.Usage = usage
 	flag.Parse()
 	if *flagVersion {
@@ -64,14 +65,14 @@ func main() {
 		body = []byte(args[1])
 	}
 
-	err = createSource(args[0], body)
+	err = createSource(args[0], body, os.FileMode(*flagFilePermission))
 	if err != nil {
 		fmt.Printf("ERROR %s\n", err)
 		os.Exit(1)
 	}
 }
 
-func createSource(src string, body []byte) error {
+func createSource(src string, body []byte, perm os.FileMode) error {
 	// check if a file exist
 	_, err := os.Stat(src)
 	if err == nil {
@@ -89,5 +90,5 @@ func createSource(src string, body []byte) error {
 		}
 	}
 
-	return ioutil.WriteFile(src, body, 0644)
+	return ioutil.WriteFile(src, body, perm)
 }

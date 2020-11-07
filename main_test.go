@@ -13,7 +13,7 @@ func TestCreateSource(t *testing.T) {
 	sourceBody := []byte("hello test")
 
 	t.Run("create dir and file", func(t *testing.T) {
-		err := createSource(fpath, sourceBody)
+		err := createSource(fpath, sourceBody, 0600)
 		assert.Nil(t, err)
 
 		// check if file was written successful
@@ -23,7 +23,7 @@ func TestCreateSource(t *testing.T) {
 	})
 
 	t.Run("file already exist", func(t *testing.T) {
-		err := createSource(fpath, sourceBody)
+		err := createSource(fpath, sourceBody, 0600)
 		assert.Nil(t, err)
 	})
 
