@@ -1,4 +1,9 @@
-all: test build
+all: lint test build
+
+lint-prepare:
+	@curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s v1.46.2
+lint:
+	@./bin/golangci-lint run ./...
 
 build:
 	@go build
