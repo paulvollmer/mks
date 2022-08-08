@@ -40,7 +40,7 @@ Flags
 
 
 Please report issues at https://github.com/paulvollmer/mks/issues
-Copyright 2019-2020, Paul Vollmer
+Copyright 2019-2022, Paul Vollmer
 ```
 
 ## Development

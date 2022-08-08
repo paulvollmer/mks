@@ -24,7 +24,7 @@ func usage() {
 	fmt.Println("  -perm int    the file permission (default 0644)")
 	fmt.Println("  -version     print the version and exit")
 	fmt.Println("\n\nPlease report issues at https://github.com/paulvollmer/mks/issues")
-	fmt.Println("Copyright 2019-2020, Paul Vollmer")
+	fmt.Println("Copyright 2019-2022, Paul Vollmer")
 }
 
 func main() {
